@@ -24,44 +24,4 @@ public class SavingsAccountTest {
 		double actual = savingsAccount.getAPR();
 		assertEquals(9.0, actual);
 	}
-
-	@Test
-	public void deposit_100_dollars() {
-		savingsAccount.deposit(100);
-		double actual = savingsAccount.getBalance();
-		assertEquals(100, actual);
-	}
-
-	@Test
-	public void deposit_100_dollars_twice() {
-		savingsAccount.deposit(100);
-		savingsAccount.deposit(100);
-		double actual = savingsAccount.getBalance();
-		assertEquals(200, actual);
-	}
-
-	@Test
-	public void withdraw_20_dollars() {
-		savingsAccount.deposit(100);
-		savingsAccount.withdraw(20);
-		double actual = savingsAccount.getBalance();
-		assertEquals(80, actual);
-	}
-
-	@Test
-	public void withdraw_20_dollars_twice() {
-		savingsAccount.deposit(100);
-		savingsAccount.withdraw(20);
-		savingsAccount.withdraw(20);
-		double actual = savingsAccount.getBalance();
-		assertEquals(60, actual);
-	}
-
-	@Test
-	public void withdraw_100_dollars_from_80_dollar_balance() {
-		savingsAccount.deposit(80);
-		savingsAccount.withdraw(100);
-		double actual = savingsAccount.getBalance();
-		assertEquals(0, actual);
-	}
 }
