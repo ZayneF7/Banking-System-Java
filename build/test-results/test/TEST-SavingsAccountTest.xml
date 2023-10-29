@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="SavingsAccountTest" tests="7" skipped="0" failures="0" errors="0" timestamp="2023-10-29T19:48:41" hostname="TABLET-NCNRUHAP" time="0.006">
+  <properties/>
+  <testcase name="withdraw_20_dollars()" classname="SavingsAccountTest" time="0.001"/>
+  <testcase name="deposit_100_dollars()" classname="SavingsAccountTest" time="0.0"/>
+  <testcase name="savings_account_created_with_specified_APR_value()" classname="SavingsAccountTest" time="0.001"/>
+  <testcase name="withdraw_100_dollars_from_80_dollar_balance()" classname="SavingsAccountTest" time="0.0"/>
+  <testcase name="deposit_100_dollars_twice()" classname="SavingsAccountTest" time="0.0"/>
+  <testcase name="savings_account_created_with_initial_balance_of_zero()" classname="SavingsAccountTest" time="0.0"/>
+  <testcase name="withdraw_20_dollars_twice()" classname="SavingsAccountTest" time="0.001"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
