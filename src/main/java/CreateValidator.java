@@ -53,6 +53,13 @@ public class CreateValidator {
 				} else {
 					return false;
 				}
+			} else if (parsedCommand[1].equals("cd")) {
+				if (arrayHasFiveElements(parsedCommand)) {
+					return (idIsValid(parsedCommand[2], bank)) && (aprIsValid(parsedCommand[3]))
+							&& (balanceIsValid(parsedCommand[4]));
+				} else {
+					return false;
+				}
 			} else {
 				return false;
 			}

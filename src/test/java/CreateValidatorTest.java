@@ -406,4 +406,141 @@ public class CreateValidatorTest {
 		String[] inputArray = createValidator.parse(INVALID_CREATE_CD_COMMAND_2);
 		assertFalse(createValidator.balanceIsValid(inputArray[4]));
 	}
+
+	@Test
+	public void Create_CD_12345678_5_5000_is_valid_for_empty_bank() {
+		assertTrue(createValidator.commandIsValid("Create CD 12345678 5 5000", bank));
+	}
+
+	@Test
+	public void create_cd_12345678_5_5000_is_valid_for_empty_bank() {
+		assertTrue(createValidator.commandIsValid("create cd 12345678 5 5000", bank));
+	}
+
+	@Test
+	public void CREATE_CD_12345678_5_5000_is_valid_for_empty_bank() {
+		assertTrue(createValidator.commandIsValid("CREATE CD 12345678 5 5000", bank));
+	}
+
+	@Test
+	public void Create_CD_12345678_0_point_5_5000_is_valid_for_empty_bank() {
+		assertTrue(createValidator.commandIsValid("Create CD 12345678 0.5 5000", bank));
+	}
+
+	@Test
+	public void Create_CD_12345678_5_1000_is_valid_for_empty_bank() {
+		assertTrue(createValidator.commandIsValid("Create CD 12345678 5 1000", bank));
+	}
+
+	@Test
+	public void Create_CD_12345678_5_1000_point_0_is_valid_for_empty_bank() {
+		assertTrue(createValidator.commandIsValid("Create CD 12345678 5 1000.0", bank));
+	}
+
+	@Test
+	public void Create_CD_12345678_5_10000_is_valid_for_empty_bank() {
+		assertTrue(createValidator.commandIsValid("Create CD 12345678 5 10000", bank));
+	}
+
+	@Test
+	public void Create_cd_12345678_5_5000_is_valid_for_bank_with_existing_checking_account_with_different_id() {
+		bank.addAccount("Checking", 12345679, 3, 0);
+		assertTrue(createValidator.commandIsValid("Create cd 12345678 5 5000", bank));
+	}
+
+	@Test
+	public void Create_cd_12345678_5_5000_is_valid_for_bank_with_existing_savings_account_with_different_id() {
+		bank.addAccount("Savings", 12345679, 3, 0);
+		assertTrue(createValidator.commandIsValid("Create cd 12345678 5 5000", bank));
+	}
+
+	@Test
+	public void Create_cd_12345678_5_5000_is_valid_for_bank_with_existing_cd_account_with_different_id() {
+		bank.addAccount("Cd", 12345679, 3, 100);
+		assertTrue(createValidator.commandIsValid("Create cd 12345678 5 5000", bank));
+	}
+
+	@Test
+	public void Create_cd_12345678_5_5000_is_valid_for_bank_with_multiple_existing_accounts_with_different_ids() {
+		bank.addAccount("Checking", 12345679, 3, 0);
+		bank.addAccount("Checking", 87654321, 3, 0);
+		bank.addAccount("Savings", 14785991, 5, 0);
+		bank.addAccount("Cd", 78649221, 7, 100);
+		assertTrue(createValidator.commandIsValid("Create cd 12345678 5 5000", bank));
+	}
+
+	@Test
+	public void Create_cd_12345678_5_is_invalid() {
+		assertFalse(createValidator.commandIsValid("Create cd 12345678 5", bank));
+	}
+
+	@Test
+	public void Create_cd_12345678_is_invalid() {
+		assertFalse(createValidator.commandIsValid("Create cd 12345678", bank));
+	}
+
+	@Test
+	public void Create_cd_5_is_invalid() {
+		assertFalse(createValidator.commandIsValid("Create cd 5", bank));
+	}
+
+	@Test
+	public void Create_cd_12345678_5_900_is_invalid() {
+		assertFalse(createValidator.commandIsValid("Create cd 12345678 5 900", bank));
+	}
+
+	@Test
+	public void Create_cd_12345678_5_11000_is_invalid() {
+		assertFalse(createValidator.commandIsValid("Create cd 12345678 5 11000", bank));
+	}
+
+	@Test
+	public void Create_cd_12345678_5_negative_5000_is_invalid() {
+		assertFalse(createValidator.commandIsValid("Create cd 12345678 5 -5000", bank));
+	}
+
+	@Test
+	public void Create_cd_12345678_5_5000dollars_is_invalid() {
+		assertFalse(createValidator.commandIsValid("Create cd 12345678 5 5000dollars", bank));
+	}
+
+	@Test
+	public void Create_cd_12345678_5_$5000_is_invalid() {
+		assertFalse(createValidator.commandIsValid("Create cd 12345678 5 $5000", bank));
+	}
+
+	@Test
+	public void Create_cd_12345678_17_5000_is_invalid() {
+		assertFalse(createValidator.commandIsValid("Create cd 12345678 17 5000", bank));
+	}
+
+	@Test
+	public void Create_cd_12345678_negative_3_5000_is_invalid() {
+		assertFalse(createValidator.commandIsValid("Create cd 12345678 -3 5000", bank));
+	}
+
+	@Test
+	public void Create_cd_123456780_5_5000_is_invalid() {
+		assertFalse(createValidator.commandIsValid("Create cd 123456789 5 5000", bank));
+	}
+
+	@Test
+	public void Create_cd_12345678_point_0_5_5000is_invalid() {
+		assertFalse(createValidator.commandIsValid("Create cd 12345678.0 5 5000", bank));
+	}
+
+	@Test
+	public void Createcd1234567855000_is_invalid() {
+		assertFalse(createValidator.commandIsValid("Createcd1234567855000", bank));
+	}
+
+	@Test
+	public void Create_cd_is_invalid() {
+		assertFalse(createValidator.commandIsValid("Create cd", bank));
+	}
+
+	@Test
+	public void Create_Madeup_12345678_5_is_invalid() {
+		assertFalse(createValidator.commandIsValid("Create Madeup 12345678 5", bank));
+	}
 }
