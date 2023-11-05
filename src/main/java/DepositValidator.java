@@ -21,15 +21,56 @@ public class DepositValidator {
 		}
 	}
 
-	public boolean isCheckingType(int id, Bank bank) {
+	public boolean isCheckingType(String idString, Bank bank) {
+		int id = Integer.parseInt(idString);
 		return (bank.getAccounts().get(id) instanceof CheckingAccount);
 	}
 
-	public boolean isSavingsType(int id, Bank bank) {
+	public boolean isSavingsType(String idString, Bank bank) {
+		int id = Integer.parseInt(idString);
 		return (bank.getAccounts().get(id) instanceof SavingsAccount);
 	}
 
-	public boolean isCdType(int id, Bank bank) {
-		return (bank.getAccounts().get(id) instanceof CdAccount);
+	public boolean validDepositForChecking(String depositString) {
+		try {
+			double depositAmount = Double.parseDouble(depositString);
+			return (0 <= depositAmount) && (depositAmount <= 1000);
+		} catch (NumberFormatException e) {
+			return false;
+		}
+	}
+
+	public boolean validDepositForSavings(String depositString) {
+		try {
+			double depositAmount = Double.parseDouble(depositString);
+			return (0 <= depositAmount) && (depositAmount <= 2500);
+		} catch (NumberFormatException e) {
+			return false;
+		}
+	}
+
+	public boolean commandIsValid(String inputCommand, Bank bank) {
+		String[] parsedCommand = parse(inputCommand);
+		if (arrayHasThreeElements(parsedCommand)) {
+			if (parsedCommand[0].equals("deposit")) {
+				if (accountIdExists(parsedCommand[1], bank)) {
+					String idString = parsedCommand[1];
+					String depositString = parsedCommand[2];
+					if ((isCheckingType(idString, bank)) && (validDepositForChecking(depositString))) {
+						return true;
+					} else if ((isSavingsType(idString, bank)) && (validDepositForSavings(depositString))) {
+						return true;
+					} else {
+						return false;
+					}
+				} else {
+					return false;
+				}
+			} else {
+				return false;
+			}
+		} else {
+			return false;
+		}
 	}
 }
