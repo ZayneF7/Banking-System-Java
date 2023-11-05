@@ -12,10 +12,11 @@ public class CreateValidator {
 		return parsedCommand.length == 4;
 	}
 
-	public boolean idIsValid(String arrayElement) {
+	public boolean idIsValid(String arrayElement, Bank bank) {
 		try {
 			int id = Integer.parseInt(arrayElement);
-			return (arrayElement.length() == 8) && (id >= 0);
+			boolean accountExists = bank.getAccounts().containsKey(id);
+			return (arrayElement.length() == 8) && (id >= 0) && (!accountExists);
 		} catch (NumberFormatException e) {
 			return false;
 		}
@@ -30,12 +31,12 @@ public class CreateValidator {
 		}
 	}
 
-	public boolean commandIsValid(String inputCommand) {
+	public boolean commandIsValid(String inputCommand, Bank bank) {
 		String[] parsedCommand = parse(inputCommand);
 		if (parsedCommand[0].equals("create")) {
 			if (parsedCommand[1].equals("checking") || (parsedCommand[1].equals("savings"))) {
 				if (arrayHasFourArrayElements(parsedCommand)) {
-					return (idIsValid(parsedCommand[2])) && (aprIsValid(parsedCommand[3]));
+					return (idIsValid(parsedCommand[2], bank)) && (aprIsValid(parsedCommand[3]));
 				} else {
 					return false;
 				}
