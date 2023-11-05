@@ -31,8 +31,8 @@ public class CreateValidatorTest {
 
 	@Test
 	public void validator_yields_array_of_correct_length_for_create_checking_command() {
-		String[] actualArray = createValidator.parse(VALID_CREATE_CHECKING_COMMAND_1);
-		assertEquals(4, actualArray.length);
+		String[] inputArray = createValidator.parse(VALID_CREATE_CHECKING_COMMAND_1);
+		assertEquals(4, inputArray.length);
 	}
 
 	@Test
