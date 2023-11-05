@@ -8,7 +8,7 @@ public class CreateValidator {
 		return lowercaseInputCommand.split(" ");
 	}
 
-	public boolean arrayHasFourArrayElements(String[] parsedCommand) {
+	public boolean arrayHasFourElements(String[] parsedCommand) {
 		return parsedCommand.length == 4;
 	}
 
@@ -35,7 +35,7 @@ public class CreateValidator {
 		String[] parsedCommand = parse(inputCommand);
 		if (parsedCommand[0].equals("create")) {
 			if (parsedCommand[1].equals("checking") || (parsedCommand[1].equals("savings"))) {
-				if (arrayHasFourArrayElements(parsedCommand)) {
+				if (arrayHasFourElements(parsedCommand)) {
 					return (idIsValid(parsedCommand[2], bank)) && (aprIsValid(parsedCommand[3]));
 				} else {
 					return false;
