@@ -12,6 +12,10 @@ public class CreateValidator {
 		return parsedCommand.length == 4;
 	}
 
+	public boolean arrayHasFiveElements(String[] parsedCommand) {
+		return parsedCommand.length == 5;
+	}
+
 	public boolean idIsValid(String arrayElement, Bank bank) {
 		try {
 			int id = Integer.parseInt(arrayElement);
@@ -26,6 +30,15 @@ public class CreateValidator {
 		try {
 			double apr = Double.parseDouble(arrayElement);
 			return (0 <= apr) && (apr <= 10);
+		} catch (NumberFormatException e) {
+			return false;
+		}
+	}
+
+	public boolean balanceIsValid(String arrayElement) {
+		try {
+			double balance = Double.parseDouble(arrayElement);
+			return (1000 <= balance) && (balance <= 10000);
 		} catch (NumberFormatException e) {
 			return false;
 		}

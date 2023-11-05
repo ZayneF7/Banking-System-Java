@@ -15,6 +15,11 @@ public class CreateValidatorTest {
 	public static final String INVALID_CREATE_CHECKING_COMMAND_4 = "Create Checking 1456582.2 3";
 	public static final String INVALID_CREATE_CHECKING_COMMAND_5 = "Create Checking 14565822 -1";
 	public static final String INVALID_CREATE_CHECKING_COMMAND_6 = "Create Checking 14565822 11.4";
+	public static final String VALID_CREATE_CD_COMMAND_1 = "Create Cd 12345678 5 5000";
+	public static final String VALID_CREATE_CD_COMMAND_2 = "Create Cd 12345678 5 1000";
+	public static final String VALID_CREATE_CD_COMMAND_3 = "Create Cd 12345678 5 10000";
+	public static final String INVALID_CREATE_CD_COMMAND_1 = "Create Cd 12345678 5 500";
+	public static final String INVALID_CREATE_CD_COMMAND_2 = "Create Cd 12345678 5 15000";
 	CreateValidator createValidator;
 	Bank bank;
 
@@ -41,13 +46,13 @@ public class CreateValidatorTest {
 	}
 
 	@Test
-	public void validator_determines_that_command_with_4_elements_is_valid_for_create_checking_command() {
+	public void validator_determines_that_command_with_4_elements_is_valid_for_create_checking_or_savings_command() {
 		String[] inputArray = createValidator.parse(VALID_CREATE_CHECKING_COMMAND_1);
 		assertTrue(createValidator.arrayHasFourElements(inputArray));
 	}
 
 	@Test
-	public void validator_determines_that_command_with_5_elements_is_invalid_for_create_checking_command() {
+	public void validator_determines_that_command_with_5_elements_is_invalid_for_create_checking_or_savings_command() {
 		String[] inputArray = createValidator.parse(INVALID_CREATE_CHECKING_COMMAND_1);
 		assertFalse(createValidator.arrayHasFourElements(inputArray));
 	}
@@ -61,14 +66,12 @@ public class CreateValidatorTest {
 
 	@Test
 	public void validator_determines_3rd_element_of_00000000_is_valid_id_value_for_create_checking_with_empty_bank() {
-		Bank bank = new Bank();
 		String[] inputArray = createValidator.parse(VALID_CREATE_CHECKING_COMMAND_3);
 		assertTrue(createValidator.idIsValid(inputArray[2], bank));
 	}
 
 	@Test
 	public void validator_determines_3rd_element_of_14565822_is_invalid_id_value_for_bank_with_account_with_same_id() {
-		Bank bank = new Bank();
 		bank.addAccount("Checking", 14565822, 3, 0);
 		String[] inputArray = createValidator.parse(VALID_CREATE_CHECKING_COMMAND_1);
 		assertFalse(createValidator.idIsValid(inputArray[2], bank));
@@ -76,21 +79,18 @@ public class CreateValidatorTest {
 
 	@Test
 	public void validator_determines_3rd_element_of_78_is_invalid_id_value_for_create_checking() {
-		Bank bank = new Bank();
 		String[] inputArray = createValidator.parse(INVALID_CREATE_CHECKING_COMMAND_2);
 		assertFalse(createValidator.idIsValid(inputArray[2], bank));
 	}
 
 	@Test
 	public void validator_determines_3rd_element_with_negative_value_is_invalid_id_value_for_create_checking() {
-		Bank bank = new Bank();
 		String[] inputArray = createValidator.parse(INVALID_CREATE_CHECKING_COMMAND_3);
 		assertFalse(createValidator.idIsValid(inputArray[2], bank));
 	}
 
 	@Test
 	public void validator_determines_3rd_element_with_decimal_value_is_invalid_id_value_for_create_checking() {
-		Bank bank = new Bank();
 		String[] inputArray = createValidator.parse(INVALID_CREATE_CHECKING_COMMAND_4);
 		assertFalse(createValidator.idIsValid(inputArray[2], bank));
 	}
@@ -114,13 +114,13 @@ public class CreateValidatorTest {
 	}
 
 	@Test
-	public void validator_determines_4th_element_with_negative_value_is_invalid_apr_value_for_create_checking() {
+	public void validator_determines_4th_element_with_negative_value_is_invalid_apr_value() {
 		String[] inputArray = createValidator.parse(INVALID_CREATE_CHECKING_COMMAND_5);
 		assertFalse(createValidator.aprIsValid(inputArray[3]));
 	}
 
 	@Test
-	public void validator_determines_4th_element_above_10_is_invalid_apr_value_for_create_checking() {
+	public void validator_determines_4th_element_above_10_is_invalid_apr_value() {
 		String[] inputArray = createValidator.parse(INVALID_CREATE_CHECKING_COMMAND_6);
 		assertFalse(createValidator.aprIsValid(inputArray[3]));
 	}
@@ -369,5 +369,41 @@ public class CreateValidatorTest {
 	public void Create_Savings_77445566_4_is_invalid_for_bank_with_account_with_same_id() {
 		bank.addAccount("Savings", 77445566, 4, 0);
 		assertFalse(createValidator.commandIsValid("Create Savings 77445566 4", bank));
+	}
+
+	@Test
+	public void validator_determines_that_command_with_5_elements_is_valid_for_create_cd_command() {
+		String[] inputArray = createValidator.parse(VALID_CREATE_CD_COMMAND_1);
+		assertTrue(createValidator.arrayHasFiveElements(inputArray));
+	}
+
+	@Test
+	public void validator_determines_5th_element_of_5000_is_valid_for_create_cd_command() {
+		String[] inputArray = createValidator.parse(VALID_CREATE_CD_COMMAND_1);
+		assertTrue(createValidator.balanceIsValid(inputArray[4]));
+	}
+
+	@Test
+	public void validator_determines_5th_element_of_1000_is_valid_for_create_cd_command() {
+		String[] inputArray = createValidator.parse(VALID_CREATE_CD_COMMAND_2);
+		assertTrue(createValidator.balanceIsValid(inputArray[4]));
+	}
+
+	@Test
+	public void validator_determines_5th_element_of_10000_is_valid_for_create_cd_command() {
+		String[] inputArray = createValidator.parse(VALID_CREATE_CD_COMMAND_3);
+		assertTrue(createValidator.balanceIsValid(inputArray[4]));
+	}
+
+	@Test
+	public void validator_determines_5th_element_of_500_is_invalid_for_create_cd_command() {
+		String[] inputArray = createValidator.parse(INVALID_CREATE_CD_COMMAND_1);
+		assertFalse(createValidator.balanceIsValid(inputArray[4]));
+	}
+
+	@Test
+	public void validator_determines_5th_element_of_15000_is_invalid_for_create_cd_command() {
+		String[] inputArray = createValidator.parse(INVALID_CREATE_CD_COMMAND_2);
+		assertFalse(createValidator.balanceIsValid(inputArray[4]));
 	}
 }
