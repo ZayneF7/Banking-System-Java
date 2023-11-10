@@ -47,31 +47,31 @@ public class DepositValidatorTest {
 	@Test
 	public void validator_confirms_account_id_12345678_exists_from_deposit_command() {
 		String[] inputArray = depositValidator.parse(VALID_DEPOSIT_COMMAND);
-		bank.addAccount("Checking", 12345678, 3, 0);
+		bank.addAccount("checking", 12345678, 3, 0);
 		assertTrue(depositValidator.accountIdExists(inputArray[1], bank));
 	}
 
 	@Test
 	public void validator_determines_that_account_is_checking_type_from_valid_id() {
-		bank.addAccount("Checking", 12345678, 3, 0);
+		bank.addAccount("checking", 12345678, 3, 0);
 		assertTrue(depositValidator.isCheckingType("12345678", bank));
 	}
 
 	@Test
 	public void validator_determines_that_account_is_not_checking_type_from_valid_id() {
-		bank.addAccount("Savings", 12345678, 3, 0);
+		bank.addAccount("savings", 12345678, 3, 0);
 		assertFalse(depositValidator.isCheckingType("12345678", bank));
 	}
 
 	@Test
 	public void validator_determines_that_account_is_savings_type_from_valid_id() {
-		bank.addAccount("Savings", 12345678, 3, 0);
+		bank.addAccount("savings", 12345678, 3, 0);
 		assertTrue(depositValidator.isSavingsType("12345678", bank));
 	}
 
 	@Test
 	public void validator_determines_that_account_is_not_savings_type_from_valid_id() {
-		bank.addAccount("Cd", 12345678, 3, 0);
+		bank.addAccount("cd", 12345678, 3, 0);
 		assertFalse(depositValidator.isSavingsType("12345678", bank));
 	}
 
@@ -128,97 +128,97 @@ public class DepositValidatorTest {
 
 	@Test
 	public void Deposit_12345678_100_is_valid_for_checking_type_with_same_id() {
-		bank.addAccount("Checking", 12345678, 3, 0);
+		bank.addAccount("checking", 12345678, 3, 0);
 		assertTrue(depositValidator.commandIsValid("Deposit 12345678 100", bank));
 	}
 
 	@Test
 	public void DEPOSIT_12345678_100_is_valid_for_checking_type_with_same_id() {
-		bank.addAccount("Checking", 12345678, 3, 0);
+		bank.addAccount("checking", 12345678, 3, 0);
 		assertTrue(depositValidator.commandIsValid("DEPOSIT 12345678 100", bank));
 	}
 
 	@Test
 	public void Deposit_12345678_0_is_valid_for_checking_type_with_same_id() {
-		bank.addAccount("Checking", 12345678, 3, 0);
+		bank.addAccount("checking", 12345678, 3, 0);
 		assertTrue(depositValidator.commandIsValid("Deposit 12345678 0", bank));
 	}
 
 	@Test
 	public void Deposit_12345678_1000_is_valid_for_checking_type_with_same_id() {
-		bank.addAccount("Checking", 12345678, 3, 0);
+		bank.addAccount("checking", 12345678, 3, 0);
 		assertTrue(depositValidator.commandIsValid("Deposit 12345678 1000", bank));
 	}
 
 	@Test
 	public void Deposit_12345678_100_is_valid_for_savings_type_with_same_id() {
-		bank.addAccount("Savings", 12345678, 3, 0);
+		bank.addAccount("savings", 12345678, 3, 0);
 		assertTrue(depositValidator.commandIsValid("Deposit 12345678 100", bank));
 	}
 
 	@Test
 	public void Deposit_12345678_2500_is_valid_for_savings_type_with_same_id() {
-		bank.addAccount("Savings", 12345678, 3, 0);
+		bank.addAccount("savings", 12345678, 3, 0);
 		assertTrue(depositValidator.commandIsValid("Deposit 12345678 2500", bank));
 	}
 
 	@Test
 	public void Deposit_12345678_0_is_valid_for_savings_type_with_same_id() {
-		bank.addAccount("Savings", 12345678, 3, 0);
+		bank.addAccount("savings", 12345678, 3, 0);
 		assertTrue(depositValidator.commandIsValid("Deposit 12345678 0", bank));
 	}
 
 	@Test
 	public void Deposit_12345678_negative_1_is_invalid_for_checking_type_with_same_id() {
-		bank.addAccount("Checking", 12345678, 3, 0);
+		bank.addAccount("checking", 12345678, 3, 0);
 		assertFalse(depositValidator.commandIsValid("Deposit 12345678 -1", bank));
 	}
 
 	@Test
 	public void Deposit_12345678_2000_is_invalid_for_checking_type_with_same_id() {
-		bank.addAccount("Checking", 12345678, 3, 0);
+		bank.addAccount("checking", 12345678, 3, 0);
 		assertFalse(depositValidator.commandIsValid("Deposit 12345678 2000", bank));
 	}
 
 	@Test
 	public void Deposit_12345678_negative_1_is_invalid_for_savings_type_with_same_id() {
-		bank.addAccount("Savings", 12345678, 3, 0);
+		bank.addAccount("savings", 12345678, 3, 0);
 		assertFalse(depositValidator.commandIsValid("Deposit 12345678 -1", bank));
 	}
 
 	@Test
 	public void Deposit_12345678_3000_is_invalid_for_savings_type_with_same_id() {
-		bank.addAccount("Savings", 12345678, 3, 0);
+		bank.addAccount("savings", 12345678, 3, 0);
 		assertFalse(depositValidator.commandIsValid("Deposit 12345678 3000", bank));
 	}
 
 	@Test
 	public void Deposit_12345678_100_is_invalid_for_cd_type_with_same_id() {
-		bank.addAccount("Cd", 12345678, 3, 0);
+		bank.addAccount("cd", 12345678, 3, 0);
 		assertFalse(depositValidator.commandIsValid("Deposit 12345678 100", bank));
 	}
 
 	@Test
 	public void Deposit_12345678_is_invalid() {
-		bank.addAccount("Savings", 12345678, 3, 0);
+		bank.addAccount("savings", 12345678, 3, 0);
 		assertFalse(depositValidator.commandIsValid("Deposit 12345678", bank));
 	}
 
 	@Test
 	public void Deposit__12345678__100_is_invalid() {
-		bank.addAccount("Savings", 12345678, 3, 0);
+		bank.addAccount("savings", 12345678, 3, 0);
 		assertFalse(depositValidator.commandIsValid("Deposit  12345678  100", bank));
 	}
 
 	@Test
 	public void Deposit_is_invalid() {
-		bank.addAccount("Savings", 12345678, 3, 0);
+		bank.addAccount("savings", 12345678, 3, 0);
 		assertFalse(depositValidator.commandIsValid("Deposit", bank));
 	}
 
 	@Test
 	public void Deposit_12345678_100_1900_is_invalid() {
-		bank.addAccount("Savings", 12345678, 3, 0);
+		bank.addAccount("savings", 12345678, 3, 0);
 		assertFalse(depositValidator.commandIsValid("Deposit 12345678 100 1900", bank));
 	}
 }

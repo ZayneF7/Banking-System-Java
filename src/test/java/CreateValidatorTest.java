@@ -72,7 +72,7 @@ public class CreateValidatorTest {
 
 	@Test
 	public void validator_determines_3rd_element_of_14565822_is_invalid_id_value_for_bank_with_account_with_same_id() {
-		bank.addAccount("Checking", 14565822, 3, 0);
+		bank.addAccount("checking", 14565822, 3, 0);
 		String[] inputArray = createValidator.parse(VALID_CREATE_CHECKING_COMMAND_1);
 		assertFalse(createValidator.idIsValid(inputArray[2], bank));
 	}
@@ -182,28 +182,28 @@ public class CreateValidatorTest {
 
 	@Test
 	public void Create_Checking_14565822_3_is_valid_for_bank_with_existing_checking_account_with_different_id() {
-		bank.addAccount("Checking", 12345678, 3, 0);
+		bank.addAccount("checking", 12345678, 3, 0);
 		assertTrue(createValidator.commandIsValid("Create Checking 14565822 3", bank));
 	}
 
 	@Test
 	public void Create_Checking_14565822_3_is_valid_for_bank_with_existing_savings_account_with_different_id() {
-		bank.addAccount("Checking", 12345678, 3, 0);
+		bank.addAccount("checking", 12345678, 3, 0);
 		assertTrue(createValidator.commandIsValid("Create Checking 14565822 3", bank));
 	}
 
 	@Test
 	public void Create_Checking_14565822_3_is_valid_for_bank_with_existing_cd_account_with_different_id() {
-		bank.addAccount("Cd", 12345678, 3, 100);
+		bank.addAccount("cd", 12345678, 3, 100);
 		assertTrue(createValidator.commandIsValid("Create Checking 14565822 3", bank));
 	}
 
 	@Test
 	public void Create_Checking_14565822_3_is_valid_for_bank_with_multiple_existing_accounts_with_different_ids() {
-		bank.addAccount("Checking", 12345678, 3, 0);
-		bank.addAccount("Checking", 87654321, 3, 0);
-		bank.addAccount("Savings", 14785991, 5, 0);
-		bank.addAccount("Cd", 78649221, 7, 100);
+		bank.addAccount("checking", 12345678, 3, 0);
+		bank.addAccount("checking", 87654321, 3, 0);
+		bank.addAccount("savings", 14785991, 5, 0);
+		bank.addAccount("cd", 78649221, 7, 100);
 		assertTrue(createValidator.commandIsValid("Create Checking 14565822 3", bank));
 	}
 
@@ -259,7 +259,7 @@ public class CreateValidatorTest {
 
 	@Test
 	public void Create_Checking_14565822_3_is_invalid_for_bank_with_account_with_same_id() {
-		bank.addAccount("Checking", 14565822, 3, 0);
+		bank.addAccount("checking", 14565822, 3, 0);
 		assertFalse(createValidator.commandIsValid("Create Checking 14565822 3", bank));
 	}
 
@@ -295,28 +295,28 @@ public class CreateValidatorTest {
 
 	@Test
 	public void Create_Savings_77445566_4_is_valid_for_bank_with_existing_checking_account_with_different_id() {
-		bank.addAccount("Checking", 12345678, 3, 0);
+		bank.addAccount("checking", 12345678, 3, 0);
 		assertTrue(createValidator.commandIsValid("Create Savings 77445566 4", bank));
 	}
 
 	@Test
 	public void Create_Savings_77445566_4_is_valid_for_bank_with_existing_savings_account_with_different_id() {
-		bank.addAccount("Savings", 12345678, 3, 0);
+		bank.addAccount("savings", 12345678, 3, 0);
 		assertTrue(createValidator.commandIsValid("Create Savings 77445566 4", bank));
 	}
 
 	@Test
 	public void Create_Savings_77445566_4_is_valid_for_bank_with_existing_cd_account_with_different_id() {
-		bank.addAccount("Cd", 12345678, 3, 100);
+		bank.addAccount("cd", 12345678, 3, 100);
 		assertTrue(createValidator.commandIsValid("Create Savings 77445566 4", bank));
 	}
 
 	@Test
 	public void Create_Savings_77445566_4_is_valid_for_bank_with_multiple_existing_accounts_with_different_ids() {
-		bank.addAccount("Checking", 12345678, 3, 0);
-		bank.addAccount("Checking", 87654321, 3, 0);
-		bank.addAccount("Savings", 14785991, 5, 0);
-		bank.addAccount("Cd", 78649221, 7, 100);
+		bank.addAccount("checking", 12345678, 3, 0);
+		bank.addAccount("checking", 87654321, 3, 0);
+		bank.addAccount("savings", 14785991, 5, 0);
+		bank.addAccount("cd", 78649221, 7, 100);
 		assertTrue(createValidator.commandIsValid("Create Savings 77445566 4", bank));
 	}
 
@@ -367,7 +367,7 @@ public class CreateValidatorTest {
 
 	@Test
 	public void Create_Savings_77445566_4_is_invalid_for_bank_with_account_with_same_id() {
-		bank.addAccount("Savings", 77445566, 4, 0);
+		bank.addAccount("savings", 77445566, 4, 0);
 		assertFalse(createValidator.commandIsValid("Create Savings 77445566 4", bank));
 	}
 
@@ -444,19 +444,19 @@ public class CreateValidatorTest {
 
 	@Test
 	public void Create_cd_12345678_5_5000_is_valid_for_bank_with_existing_checking_account_with_different_id() {
-		bank.addAccount("Checking", 12345679, 3, 0);
+		bank.addAccount("checking", 12345679, 3, 0);
 		assertTrue(createValidator.commandIsValid("Create cd 12345678 5 5000", bank));
 	}
 
 	@Test
 	public void Create_cd_12345678_5_5000_is_valid_for_bank_with_existing_savings_account_with_different_id() {
-		bank.addAccount("Savings", 12345679, 3, 0);
+		bank.addAccount("savings", 12345679, 3, 0);
 		assertTrue(createValidator.commandIsValid("Create cd 12345678 5 5000", bank));
 	}
 
 	@Test
 	public void Create_cd_12345678_5_5000_is_valid_for_bank_with_existing_cd_account_with_different_id() {
-		bank.addAccount("Cd", 12345679, 3, 100);
+		bank.addAccount("cd", 12345679, 3, 100);
 		assertTrue(createValidator.commandIsValid("Create cd 12345678 5 5000", bank));
 	}
 
