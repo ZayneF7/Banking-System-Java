@@ -1,9 +1,11 @@
 public class CommandProcessor {
+	private Bank bank;
 
-	public CommandProcessor() {
+	public CommandProcessor(Bank bank) {
+		this.bank = bank;
 	}
 
-	public void createAccount(String commandString, Bank bank) {
+	public void createAccount(String commandString) {
 		String[] splitCommandString = commandString.toLowerCase().split(" ");
 
 		if (splitCommandString[1].equals("checking")) {
@@ -22,7 +24,7 @@ public class CommandProcessor {
 		}
 	}
 
-	public void depositIntoAccount(String commandString, Bank bank) {
+	public void depositIntoAccount(String commandString) {
 		String[] splitCommandString = commandString.toLowerCase().split(" ");
 		int id = Integer.parseInt(splitCommandString[1]);
 		double amountToDeposit = Double.parseDouble((splitCommandString[2]));

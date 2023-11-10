@@ -4,7 +4,7 @@ import java.util.Map;
 public class Bank {
 	private Map<Integer, Account> accounts;
 
-	Bank() {
+	public Bank() {
 		accounts = new HashMap<>();
 	}
 
