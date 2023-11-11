@@ -1,6 +1,8 @@
 public class CreateValidator {
+	private Bank bank;
 
-	public CreateValidator() {
+	public CreateValidator(Bank bank) {
+		this.bank = bank;
 	}
 
 	public String[] parse(String inputCommand) {
@@ -16,7 +18,7 @@ public class CreateValidator {
 		return parsedCommand.length == 5;
 	}
 
-	public boolean idIsValid(String arrayElement, Bank bank) {
+	public boolean idIsValid(String arrayElement) {
 		try {
 			int id = Integer.parseInt(arrayElement);
 			boolean accountExists = bank.getAccounts().containsKey(id);
@@ -44,18 +46,18 @@ public class CreateValidator {
 		}
 	}
 
-	public boolean commandIsValid(String inputCommand, Bank bank) {
+	public boolean commandIsValid(String inputCommand) {
 		String[] parsedCommand = parse(inputCommand);
 		if (parsedCommand[0].equals("create")) {
 			if (parsedCommand[1].equals("checking") || (parsedCommand[1].equals("savings"))) {
 				if (arrayHasFourElements(parsedCommand)) {
-					return (idIsValid(parsedCommand[2], bank)) && (aprIsValid(parsedCommand[3]));
+					return (idIsValid(parsedCommand[2])) && (aprIsValid(parsedCommand[3]));
 				} else {
 					return false;
 				}
 			} else if (parsedCommand[1].equals("cd")) {
 				if (arrayHasFiveElements(parsedCommand)) {
-					return (idIsValid(parsedCommand[2], bank)) && (aprIsValid(parsedCommand[3]))
+					return (idIsValid(parsedCommand[2])) && (aprIsValid(parsedCommand[3]))
 							&& (balanceIsValid(parsedCommand[4]));
 				} else {
 					return false;

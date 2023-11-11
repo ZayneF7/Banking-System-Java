@@ -1,6 +1,8 @@
 public class DepositValidator {
+	private Bank bank;
 
-	public DepositValidator() {
+	public DepositValidator(Bank bank) {
+		this.bank = bank;
 	}
 
 	public String[] parse(String inputCommand) {
@@ -12,7 +14,7 @@ public class DepositValidator {
 		return parsedCommand.length == 3;
 	}
 
-	public boolean accountIdExists(String arrayElement, Bank bank) {
+	public boolean accountIdExists(String arrayElement) {
 		try {
 			int id = Integer.parseInt(arrayElement);
 			return bank.getAccounts().containsKey(id);
@@ -21,12 +23,12 @@ public class DepositValidator {
 		}
 	}
 
-	public boolean isCheckingType(String idString, Bank bank) {
+	public boolean isCheckingType(String idString) {
 		int id = Integer.parseInt(idString);
 		return (bank.getAccounts().get(id) instanceof CheckingAccount);
 	}
 
-	public boolean isSavingsType(String idString, Bank bank) {
+	public boolean isSavingsType(String idString) {
 		int id = Integer.parseInt(idString);
 		return (bank.getAccounts().get(id) instanceof SavingsAccount);
 	}
@@ -49,16 +51,16 @@ public class DepositValidator {
 		}
 	}
 
-	public boolean commandIsValid(String inputCommand, Bank bank) {
+	public boolean commandIsValid(String inputCommand) {
 		String[] parsedCommand = parse(inputCommand);
 		if (arrayHasThreeElements(parsedCommand)) {
 			if (parsedCommand[0].equals("deposit")) {
-				if (accountIdExists(parsedCommand[1], bank)) {
+				if (accountIdExists(parsedCommand[1])) {
 					String idString = parsedCommand[1];
 					String depositString = parsedCommand[2];
-					if ((isCheckingType(idString, bank)) && (validDepositForChecking(depositString))) {
+					if ((isCheckingType(idString)) && (validDepositForChecking(depositString))) {
 						return true;
-					} else if ((isSavingsType(idString, bank)) && (validDepositForSavings(depositString))) {
+					} else if ((isSavingsType(idString)) && (validDepositForSavings(depositString))) {
 						return true;
 					} else {
 						return false;
