@@ -74,4 +74,13 @@ public class AccountTest {
 		double actual = checkingAccount.getBalance();
 		assertEquals(0, actual);
 	}
+
+	@Test
+	public void withdraw_100_dollars_from_100_dollar_balance() {
+		Account checkingAccount = new CheckingAccount(ACCOUNT_ID, APR);
+		checkingAccount.deposit(100);
+		checkingAccount.withdraw(100);
+		double actual = checkingAccount.getBalance();
+		assertEquals(0, actual);
+	}
 }
