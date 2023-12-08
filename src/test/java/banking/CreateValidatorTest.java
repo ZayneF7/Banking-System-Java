@@ -50,13 +50,13 @@ public class CreateValidatorTest {
 	@Test
 	public void validator_determines_that_command_with_4_elements_is_valid_for_create_checking_or_savings_command() {
 		String[] inputArray = createValidator.parse(VALID_CREATE_CHECKING_COMMAND_1);
-		assertTrue(createValidator.arrayHasFourElements(inputArray));
+		assertEquals(4, inputArray.length);
 	}
 
 	@Test
 	public void validator_determines_that_command_with_5_elements_is_invalid_for_create_checking_or_savings_command() {
 		String[] inputArray = createValidator.parse(INVALID_CREATE_CHECKING_COMMAND_1);
-		assertFalse(createValidator.arrayHasFourElements(inputArray));
+		assertEquals(5, inputArray.length);
 	}
 
 	@Test
@@ -376,7 +376,7 @@ public class CreateValidatorTest {
 	@Test
 	public void validator_determines_that_command_with_5_elements_is_valid_for_create_cd_command() {
 		String[] inputArray = createValidator.parse(VALID_CREATE_CD_COMMAND_1);
-		assertTrue(createValidator.arrayHasFiveElements(inputArray));
+		assertEquals(5, inputArray.length);
 	}
 
 	@Test

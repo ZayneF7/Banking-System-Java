@@ -18,7 +18,7 @@ public class PassValidatorTest {
 	}
 
 	@Test
-	public void validator_yield_array_of__correct_length_for_valid_pass_command() {
+	public void validator_yields_array_of_correct_length_for_valid_pass_command() {
 		String[] inputArray = passValidator.parse(VALID_PASS_COMMAND_1);
 		assertEquals(2, inputArray.length);
 	}

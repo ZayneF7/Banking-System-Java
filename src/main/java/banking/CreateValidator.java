@@ -1,23 +1,11 @@
 package banking;
 
-public class CreateValidator {
+public class CreateValidator extends Validator {
 	private Bank bank;
 
 	public CreateValidator(Bank bank) {
+		super(bank);
 		this.bank = bank;
-	}
-
-	public String[] parse(String inputCommand) {
-		String lowercaseInputCommand = inputCommand.toLowerCase();
-		return lowercaseInputCommand.split(" ");
-	}
-
-	public boolean arrayHasFourElements(String[] parsedCommand) {
-		return parsedCommand.length == 4;
-	}
-
-	public boolean arrayHasFiveElements(String[] parsedCommand) {
-		return parsedCommand.length == 5;
 	}
 
 	public boolean idIsValid(String arrayElement) {
@@ -52,13 +40,13 @@ public class CreateValidator {
 		String[] parsedCommand = parse(inputCommand);
 		if (parsedCommand[0].equals("create")) {
 			if (parsedCommand[1].equals("checking") || (parsedCommand[1].equals("savings"))) {
-				if (arrayHasFourElements(parsedCommand)) {
+				if (parsedCommand.length == 4) {
 					return (idIsValid(parsedCommand[2])) && (aprIsValid(parsedCommand[3]));
 				} else {
 					return false;
 				}
 			} else if (parsedCommand[1].equals("cd")) {
-				if (arrayHasFiveElements(parsedCommand)) {
+				if (parsedCommand.length == 5) {
 					return (idIsValid(parsedCommand[2])) && (aprIsValid(parsedCommand[3]))
 							&& (balanceIsValid(parsedCommand[4]));
 				} else {
