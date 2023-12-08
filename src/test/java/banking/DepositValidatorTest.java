@@ -27,13 +27,13 @@ public class DepositValidatorTest {
 	@Test
 	public void validator_determines_that_command_with_3_elements_is_valid_for_deposit_command() {
 		String[] inputArray = depositValidator.parse(VALID_DEPOSIT_COMMAND);
-		assertTrue(depositValidator.arrayHasThreeElements(inputArray));
+		assertEquals(3, inputArray.length);
 	}
 
 	@Test
 	public void validator_determines_that_command_with_4_elements_is_invalid_for_deposit_command() {
 		String[] inputArray = depositValidator.parse(INVALID_DEPOSIT_COMMAND);
-		assertFalse(depositValidator.arrayHasThreeElements(inputArray));
+		assertFalse(inputArray.length == 3);
 	}
 
 	@Test

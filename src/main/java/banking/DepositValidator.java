@@ -1,38 +1,11 @@
 package banking;
 
-public class DepositValidator {
+public class DepositValidator extends Validator {
 	private Bank bank;
 
 	public DepositValidator(Bank bank) {
+		super(bank);
 		this.bank = bank;
-	}
-
-	public String[] parse(String inputCommand) {
-		String lowercaseInputCommand = inputCommand.toLowerCase();
-		return lowercaseInputCommand.split(" ");
-	}
-
-	public boolean arrayHasThreeElements(String[] parsedCommand) {
-		return parsedCommand.length == 3;
-	}
-
-	public boolean accountIdExists(String arrayElement) {
-		try {
-			int id = Integer.parseInt(arrayElement);
-			return bank.getAccounts().containsKey(id);
-		} catch (NumberFormatException e) {
-			return false;
-		}
-	}
-
-	public boolean isCheckingType(String idString) {
-		int id = Integer.parseInt(idString);
-		return (bank.getAccounts().get(id) instanceof CheckingAccount);
-	}
-
-	public boolean isSavingsType(String idString) {
-		int id = Integer.parseInt(idString);
-		return (bank.getAccounts().get(id) instanceof SavingsAccount);
 	}
 
 	public boolean validDepositForChecking(String depositString) {
@@ -55,7 +28,7 @@ public class DepositValidator {
 
 	public boolean commandIsValid(String inputCommand) {
 		String[] parsedCommand = parse(inputCommand);
-		if (arrayHasThreeElements(parsedCommand)) {
+		if (parsedCommand.length == 3) {
 			if (parsedCommand[0].equals("deposit")) {
 				if (accountIdExists(parsedCommand[1])) {
 					String idString = parsedCommand[1];
