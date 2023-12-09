@@ -1,39 +1,11 @@
 package banking;
 
-public class WithdrawValidator {
+public class WithdrawValidator extends Validator {
 	private Bank bank;
 
 	public WithdrawValidator(Bank bank) {
+		super(bank);
 		this.bank = bank;
-	}
-
-	public String[] parse(String inputCommand) {
-		String lowercaseInputCommand = inputCommand.toLowerCase();
-		return lowercaseInputCommand.split(" ");
-	}
-
-	public boolean accountIdExists(String arrayElement) {
-		try {
-			int id = Integer.parseInt(arrayElement);
-			return bank.getAccounts().containsKey(id);
-		} catch (NumberFormatException e) {
-			return false;
-		}
-	}
-
-	public boolean isCheckingType(String idString) {
-		int id = Integer.parseInt(idString);
-		return (bank.getAccounts().get(id) instanceof CheckingAccount);
-	}
-
-	public boolean isSavingsType(String idString) {
-		int id = Integer.parseInt(idString);
-		return (bank.getAccounts().get(id) instanceof SavingsAccount);
-	}
-
-	public boolean isCdType(String idString) {
-		int id = Integer.parseInt(idString);
-		return (bank.getAccounts().get(id) instanceof CdAccount);
 	}
 
 	public boolean validWithdrawForChecking(String withdrawString) {
@@ -64,4 +36,31 @@ public class WithdrawValidator {
 		}
 	}
 
+	public boolean commandIsValid(String inputCommand) {
+		String[] parsedCommand = parse(inputCommand);
+		if (parsedCommand.length == 3) {
+			if (parsedCommand[0].equals("withdraw")) {
+				if (accountIdExists(parsedCommand[1])) {
+					String idString = parsedCommand[1];
+					String withdrawString = parsedCommand[2];
+					int months = bank.getAccounts().get(Integer.parseInt(idString)).getMonths();
+					if (isCheckingType(idString) && validWithdrawForChecking(withdrawString)) {
+						return true;
+					} else if (isSavingsType(idString) && validWithdrawForSavings(withdrawString) && (months >= 1)) {
+						return true;
+					} else if (isCdType(idString) && validWithdrawForCd(idString, withdrawString) && (months >= 12)) {
+						return true;
+					} else {
+						return false;
+					}
+				} else {
+					return false;
+				}
+			} else {
+				return false;
+			}
+		} else {
+			return false;
+		}
+	}
 }

@@ -7,6 +7,9 @@ public abstract class Validator {
 		this.bank = bank;
 	}
 
+	public Validator() {
+	}
+
 	public String[] parse(String inputCommand) {
 		String lowercaseInputCommand = inputCommand.toLowerCase();
 		return lowercaseInputCommand.split(" ");

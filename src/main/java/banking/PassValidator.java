@@ -1,12 +1,7 @@
 package banking;
 
-public class PassValidator {
+public class PassValidator extends Validator {
 	public PassValidator() {
-	}
-
-	public String[] parse(String inputCommand) {
-		String lowercaseInputCommand = inputCommand.toLowerCase();
-		return lowercaseInputCommand.split(" ");
 	}
 
 	public boolean numOfMonthsIsValid(String arrayElement) {
