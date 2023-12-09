@@ -1,9 +1,9 @@
 package banking;
 
-public class CommandProcessor {
+public class CreateCommandProcessor {
 	private Bank bank;
 
-	public CommandProcessor(Bank bank) {
+	public CreateCommandProcessor(Bank bank) {
 		this.bank = bank;
 	}
 
@@ -21,13 +21,6 @@ public class CommandProcessor {
 			double balance = Double.parseDouble(splitCommandString[4]);
 			bank.addAccount("cd", id, apr, balance);
 		}
-	}
-
-	public void depositIntoAccount(String commandString) {
-		String[] splitCommandString = commandString.toLowerCase().split(" ");
-		int id = Integer.parseInt(splitCommandString[1]);
-		double amountToDeposit = Double.parseDouble((splitCommandString[2]));
-		bank.getAccounts().get(id).deposit(amountToDeposit);
 	}
 
 }

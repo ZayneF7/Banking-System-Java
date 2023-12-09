@@ -2,10 +2,10 @@ package banking;
 
 import java.util.ArrayList;
 
-public class CommandStorage {
+public class InvalidCommandStorage {
 	private ArrayList<String> commands;
 
-	public CommandStorage() {
+	public InvalidCommandStorage() {
 		commands = new ArrayList<String>();
 	}
 

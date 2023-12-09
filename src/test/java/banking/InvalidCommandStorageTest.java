@@ -5,12 +5,12 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-public class CommandStorageTest {
-	CommandStorage commandStorage;
+public class InvalidCommandStorageTest {
+	InvalidCommandStorage commandStorage;
 
 	@BeforeEach
 	public void setUp() {
-		commandStorage = new CommandStorage();
+		commandStorage = new InvalidCommandStorage();
 	}
 
 	@Test

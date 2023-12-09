@@ -5,27 +5,30 @@ import java.util.List;
 public class MasterControl {
 	private CreateValidator createValidator;
 	private DepositValidator depositValidator;
-	private CommandProcessor commandProcessor;
-	private CommandStorage commandStorage;
+	private CreateCommandProcessor createCommandProcessor;
+	private DepositCommandProcessor depositCommandProcessor;
+	private InvalidCommandStorage invalidCommandStorage;
 
 	public MasterControl(CreateValidator createValidator, DepositValidator depositValidator,
-			CommandProcessor commandProcessor, CommandStorage commandStorage) {
+			CreateCommandProcessor createCommandProcessor, DepositCommandProcessor depositCommandProcessor,
+			InvalidCommandStorage invalidCommandStorage) {
 		this.createValidator = createValidator;
 		this.depositValidator = depositValidator;
-		this.commandProcessor = commandProcessor;
-		this.commandStorage = commandStorage;
+		this.createCommandProcessor = createCommandProcessor;
+		this.depositCommandProcessor = depositCommandProcessor;
+		this.invalidCommandStorage = invalidCommandStorage;
 	}
 
 	public List<String> start(List<String> input) {
 		for (String command : input) {
 			if (createValidator.commandIsValid(command)) {
-				commandProcessor.createAccount(command);
+				createCommandProcessor.createAccount(command);
 			} else if (depositValidator.commandIsValid(command)) {
-				commandProcessor.depositIntoAccount(command);
+				depositCommandProcessor.depositIntoAccount(command);
 			} else {
-				commandStorage.addCommand(command);
+				invalidCommandStorage.addCommand(command);
 			}
 		}
-		return commandStorage.getCommands();
+		return invalidCommandStorage.getCommands();
 	}
 }
