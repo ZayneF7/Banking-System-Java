@@ -16,10 +16,13 @@ public class MasterControlTest {
 	void setUp() {
 		input = new ArrayList<>();
 		Bank bank = new Bank();
+		InvalidCommandStorage invalidCommandStorage = new InvalidCommandStorage();
+		ValidCommandStorage validCommandStorage = new ValidCommandStorage();
 		masterControl = new MasterControl(new CreateValidator(bank), new DepositValidator(bank), new PassValidator(),
 				new WithdrawValidator(bank), new TransferValidator(bank), new CreateCommandProcessor(bank),
 				new DepositCommandProcessor(bank), new PassCommandProcessor(bank), new WithdrawCommandProcessor(bank),
-				new TransferCommandProcessor(bank), new InvalidCommandStorage(), new ValidCommandStorage());
+				new TransferCommandProcessor(bank), invalidCommandStorage, validCommandStorage,
+				new Output(bank, validCommandStorage, invalidCommandStorage));
 	}
 
 	private void assertSingleCommand(String command, List<String> actual) {
@@ -58,77 +61,23 @@ public class MasterControlTest {
 	}
 
 	@Test
-	void invalid_to_create_accounts_with_same_ID() {
-		input.add("create checking 12345678 1.0");
-		input.add("create checking 12345678 1.0");
-
+	void sample_make_sure_this_passes_unchanged_or_you_will_fail() {
+		input.add("Create savings 12345678 0.6");
+		input.add("Deposit 12345678 700");
+		input.add("Deposit 12345678 5000");
+		input.add("creAte cHecKing 98765432 0.01");
+		input.add("Deposit 98765432 300");
+		input.add("Transfer 98765432 12345678 300");
+		input.add("Pass 1");
+		input.add("Create cd 23456789 1.2 2000");
 		List<String> actual = masterControl.start(input);
 
-		assertSingleCommand("create checking 12345678 1.0", actual);
-	}
-
-	@Test
-	void invalid_to_create_checking_account_with_specified_balance() {
-		input.add("create checking 12345678 1.0 100");
-
-		List<String> actual = masterControl.start(input);
-
-		assertEquals("create checking 12345678 1.0 100", actual.get(0));
-	}
-
-	@Test
-	void invalid_to_create_savings_account_with_specified_balance() {
-		input.add("create savings 12345678 1.0 100");
-
-		List<String> actual = masterControl.start(input);
-
-		assertEquals("create savings 12345678 1.0 100", actual.get(0));
-	}
-
-	@Test
-	void invalid_to_create_cd_account_without_specified_balance() {
-		input.add("create cd 12345678 1.0");
-
-		List<String> actual = masterControl.start(input);
-
-		assertSingleCommand("create cd 12345678 1.0", actual);
-	}
-
-	@Test
-	void invalid_to_deposit_negative_dollars() {
-		input.add("create checking 12345678 1.0");
-		input.add("deposit 12345678 -1");
-
-		List<String> actual = masterControl.start(input);
-
-		assertSingleCommand("deposit 12345678 -1", actual);
-	}
-
-	@Test
-	void invalid_to_deposit_more_than_max_amount() {
-		input.add("create checking 12345678 1.0");
-		input.add("create savings 12345679 1.0");
-		input.add("deposit 12345678 3000");
-		input.add("deposit 12345679 3000");
-
-		List<String> actual = masterControl.start(input);
-
-		assertEquals(2, actual.size());
-		assertEquals("deposit 12345678 3000", actual.get(0));
-		assertEquals("deposit 12345679 3000", actual.get(1));
-	}
-
-	@Test
-	void no_commands_returned_when_all_are_valid() {
-		input.add("create checking 12345678 1.0");
-		input.add("create savings 12345679 1.0");
-		input.add("deposit 12345678 1000");
-		input.add("deposit 12345679 1000");
-
-		List<String> actual = masterControl.start(input);
-
-		assertEquals(0, actual.size());
-
+		assertEquals(5, actual.size());
+		assertEquals("Savings 12345678 1000.50 0.60", actual.get(0));
+		assertEquals("Deposit 12345678 700", actual.get(1));
+		assertEquals("Transfer 98765432 12345678 300", actual.get(2));
+		assertEquals("Cd 23456789 2000.00 1.20", actual.get(3));
+		assertEquals("Deposit 12345678 5000", actual.get(4));
 	}
 
 }

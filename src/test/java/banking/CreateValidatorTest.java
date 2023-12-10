@@ -128,6 +128,12 @@ public class CreateValidatorTest {
 	}
 
 	@Test
+	public void validator_determines_4th_element_of_ten_is_invalid_apr_value() {
+		String[] inputArray = createValidator.parse("Create Checking 12345678 ten");
+		assertFalse(createValidator.aprIsValid(inputArray[3]));
+	}
+
+	@Test
 	public void Create_Checking_14565822_3_is_valid_for_empty_bank() {
 		assertTrue(createValidator.commandIsValid("Create Checking 14565822 3"));
 	}

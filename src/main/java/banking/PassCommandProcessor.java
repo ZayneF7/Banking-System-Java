@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 public class PassCommandProcessor {
-	Map<Integer, Account> accounts;
+	private Map<Integer, Account> accounts;
 	private Bank bank;
 
 	public PassCommandProcessor(Bank bank) {

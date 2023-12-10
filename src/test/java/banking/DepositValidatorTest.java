@@ -104,6 +104,11 @@ public class DepositValidatorTest {
 	}
 
 	@Test
+	public void validator_determines_deposit_amount_of_onethousand_is_invalid_for_checking_type() {
+		assertFalse(depositValidator.validDepositForChecking("onethousand"));
+	}
+
+	@Test
 	public void validator_determines_deposit_amount_of_100_is_valid_for_savings_type() {
 		assertTrue(depositValidator.validDepositForSavings("100"));
 	}
@@ -126,6 +131,11 @@ public class DepositValidatorTest {
 	@Test
 	public void validator_determines_deposit_amount_of_3000_is_invalid_for_checking_type() {
 		assertFalse(depositValidator.validDepositForSavings("3000"));
+	}
+
+	@Test
+	public void validator_determines_deposit_amount_of_onethousand_is_invalid_for_savings_type() {
+		assertFalse(depositValidator.validDepositForSavings("onethousand"));
 	}
 
 	@Test
@@ -222,5 +232,11 @@ public class DepositValidatorTest {
 	public void Deposit_12345678_100_1900_is_invalid() {
 		bank.addAccount("savings", 12345678, 3, 0);
 		assertFalse(depositValidator.commandIsValid("Deposit 12345678 100 1900"));
+	}
+
+	@Test
+	public void Deposit_12345678_100_is_invalid_for_nonexistent_id() {
+		bank.addAccount("savings", 11111111, 3, 0);
+		assertFalse(depositValidator.commandIsValid("Deposit 12345678 100"));
 	}
 }

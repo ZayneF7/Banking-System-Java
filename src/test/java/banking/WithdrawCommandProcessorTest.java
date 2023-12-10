@@ -1,6 +1,7 @@
 package banking;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -52,6 +53,14 @@ public class WithdrawCommandProcessorTest {
 		bank.getAccounts().get(12345678).deposit(100);
 		withdrawCommandProcessor.withdrawFromAccount("withdraw 12345678 110");
 		assertEquals(0, bank.getAccounts().get(12345678).getBalance());
+	}
+
+	@Test
+	public void withdraw_12345678_110_does_not_reduce_account_with_100_balance_to_neg_10() {
+		bank.addAccount("checking", 12345678, 3.0, 0);
+		bank.getAccounts().get(12345678).deposit(100);
+		withdrawCommandProcessor.withdrawFromAccount("withdraw 12345678 110");
+		assertFalse(bank.getAccounts().get(12345678).getBalance() == -10);
 	}
 
 	@Test

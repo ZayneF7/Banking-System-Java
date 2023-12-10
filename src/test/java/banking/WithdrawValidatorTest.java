@@ -159,6 +159,12 @@ public class WithdrawValidatorTest {
 	}
 
 	@Test
+	public void validator_takes_ten_as_an_invalid_withdraw_amount_for_cd_account_with_400_balance() {
+		bank.addAccount("cd", 12345678, 3.0, 400);
+		assertFalse(withdrawValidator.validWithdrawForCd("12345678", "ten"));
+	}
+
+	@Test
 	public void Withdraw_12345678_0_is_valid_for_checking_account_with_same_id_0_balance_and_0_months() {
 		bank.addAccount("checking", 12345678, 3.0, 0);
 		assertTrue(withdrawValidator.commandIsValid("Withdraw 12345678 0"));

@@ -15,13 +15,14 @@ public class MasterControl {
 	private TransferCommandProcessor transferCommandProcessor;
 	private InvalidCommandStorage invalidCommandStorage;
 	private ValidCommandStorage validCommandStorage;
+	private Output output;
 
 	public MasterControl(CreateValidator createValidator, DepositValidator depositValidator,
 			PassValidator passValidator, WithdrawValidator withdrawValidator, TransferValidator transferValidator,
 			CreateCommandProcessor createCommandProcessor, DepositCommandProcessor depositCommandProcessor,
 			PassCommandProcessor passCommandProcessor, WithdrawCommandProcessor withdrawCommandProcessor,
 			TransferCommandProcessor transferCommandProcessor, InvalidCommandStorage invalidCommandStorage,
-			ValidCommandStorage validCommandStorage) {
+			ValidCommandStorage validCommandStorage, Output output) {
 		this.createValidator = createValidator;
 		this.depositValidator = depositValidator;
 		this.passValidator = passValidator;
@@ -34,6 +35,7 @@ public class MasterControl {
 		this.transferCommandProcessor = transferCommandProcessor;
 		this.invalidCommandStorage = invalidCommandStorage;
 		this.validCommandStorage = validCommandStorage;
+		this.output = output;
 	}
 
 	public List<String> start(List<String> input) {
@@ -55,6 +57,7 @@ public class MasterControl {
 				invalidCommandStorage.addCommand(command);
 			}
 		}
-		return invalidCommandStorage.getCommands();
+		List<String> outputList = output.createOutputList();
+		return outputList;
 	}
 }
