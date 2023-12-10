@@ -1,10 +1,12 @@
+package banking;
+
 import java.util.HashMap;
 import java.util.Map;
 
 public class Bank {
 	private Map<Integer, Account> accounts;
 
-	Bank() {
+	public Bank() {
 		accounts = new HashMap<>();
 	}
 
@@ -13,13 +15,13 @@ public class Bank {
 	}
 
 	public void addAccount(String accountType, Integer accountID, double apr, double balance) {
-		if (accountType.equals("Checking")) {
+		if (accountType.equals("checking")) {
 			accounts.put(accountID, new CheckingAccount(accountID, apr));
 		}
-		if (accountType.equals("Savings")) {
+		if (accountType.equals("savings")) {
 			accounts.put(accountID, new SavingsAccount(accountID, apr));
 		}
-		if (accountType.equals("Cd")) {
+		if (accountType.equals("cd")) {
 			accounts.put(accountID, new CdAccount(accountID, apr, balance));
 		}
 	}
