@@ -80,4 +80,20 @@ public class MasterControlTest {
 		assertEquals("Deposit 12345678 5000", actual.get(4));
 	}
 
+	@Test
+	void test_1() {
+		input.add("Create Checking 11111111 3");
+		input.add("Deposit 11111111 100");
+		input.add("pass 2");
+		input.add("deposit 33333333 200");
+		input.add("witHDraW 11111111 50");
+		List<String> actual = masterControl.start(input);
+
+		assertEquals(4, actual.size());
+		assertEquals("Checking 11111111 50.50 3.00", actual.get(0));
+		assertEquals("Deposit 11111111 100", actual.get(1));
+		assertEquals("witHDraW 11111111 50", actual.get(2));
+		assertEquals("deposit 33333333 200", actual.get(3));
+	}
+
 }

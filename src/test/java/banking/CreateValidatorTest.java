@@ -60,6 +60,11 @@ public class CreateValidatorTest {
 	}
 
 	@Test
+	public void validator_determines_noninteger_element_does_not_exist_as_an_id() {
+		assertFalse(createValidator.accountIdExists("ten"));
+	}
+
+	@Test
 	public void validator_determines_3rd_element_of_14565822_is_valid_id_value_for_create_checking_with_empty_bank() {
 		Bank bank = new Bank();
 		String[] inputArray = createValidator.parse(VALID_CREATE_CHECKING_COMMAND_1);
