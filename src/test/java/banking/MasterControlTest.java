@@ -19,7 +19,7 @@ public class MasterControlTest {
 		masterControl = new MasterControl(new CreateValidator(bank), new DepositValidator(bank), new PassValidator(),
 				new WithdrawValidator(bank), new TransferValidator(bank), new CreateCommandProcessor(bank),
 				new DepositCommandProcessor(bank), new PassCommandProcessor(bank), new WithdrawCommandProcessor(bank),
-				new TransferCommandProcessor(bank), new InvalidCommandStorage());
+				new TransferCommandProcessor(bank), new InvalidCommandStorage(), new ValidCommandStorage());
 	}
 
 	private void assertSingleCommand(String command, List<String> actual) {

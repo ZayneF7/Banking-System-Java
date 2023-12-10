@@ -14,12 +14,14 @@ public class MasterControl {
 	private WithdrawCommandProcessor withdrawCommandProcessor;
 	private TransferCommandProcessor transferCommandProcessor;
 	private InvalidCommandStorage invalidCommandStorage;
+	private ValidCommandStorage validCommandStorage;
 
 	public MasterControl(CreateValidator createValidator, DepositValidator depositValidator,
 			PassValidator passValidator, WithdrawValidator withdrawValidator, TransferValidator transferValidator,
 			CreateCommandProcessor createCommandProcessor, DepositCommandProcessor depositCommandProcessor,
 			PassCommandProcessor passCommandProcessor, WithdrawCommandProcessor withdrawCommandProcessor,
-			TransferCommandProcessor transferCommandProcessor, InvalidCommandStorage invalidCommandStorage) {
+			TransferCommandProcessor transferCommandProcessor, InvalidCommandStorage invalidCommandStorage,
+			ValidCommandStorage validCommandStorage) {
 		this.createValidator = createValidator;
 		this.depositValidator = depositValidator;
 		this.passValidator = passValidator;
@@ -31,6 +33,7 @@ public class MasterControl {
 		this.withdrawCommandProcessor = withdrawCommandProcessor;
 		this.transferCommandProcessor = transferCommandProcessor;
 		this.invalidCommandStorage = invalidCommandStorage;
+		this.validCommandStorage = validCommandStorage;
 	}
 
 	public List<String> start(List<String> input) {
@@ -39,12 +42,15 @@ public class MasterControl {
 				createCommandProcessor.createAccount(command);
 			} else if (depositValidator.commandIsValid(command)) {
 				depositCommandProcessor.depositIntoAccount(command);
+				validCommandStorage.addCommand(command);
 			} else if (passValidator.commandIsValid(command)) {
 				passCommandProcessor.passTime(command);
 			} else if (withdrawValidator.commandIsValid(command)) {
 				withdrawCommandProcessor.withdrawFromAccount(command);
+				validCommandStorage.addCommand(command);
 			} else if (transferValidator.commandIsValid(command)) {
 				transferCommandProcessor.transfer(command);
+				validCommandStorage.addCommand(command);
 			} else {
 				invalidCommandStorage.addCommand(command);
 			}
