@@ -7,25 +7,29 @@ public class MasterControl {
 	private DepositValidator depositValidator;
 	private PassValidator passValidator;
 	private WithdrawValidator withdrawValidator;
+	private TransferValidator transferValidator;
 	private CreateCommandProcessor createCommandProcessor;
 	private DepositCommandProcessor depositCommandProcessor;
 	private PassCommandProcessor passCommandProcessor;
 	private WithdrawCommandProcessor withdrawCommandProcessor;
+	private TransferCommandProcessor transferCommandProcessor;
 	private InvalidCommandStorage invalidCommandStorage;
 
 	public MasterControl(CreateValidator createValidator, DepositValidator depositValidator,
-			PassValidator passValidator, WithdrawValidator withdrawValidator,
+			PassValidator passValidator, WithdrawValidator withdrawValidator, TransferValidator transferValidator,
 			CreateCommandProcessor createCommandProcessor, DepositCommandProcessor depositCommandProcessor,
 			PassCommandProcessor passCommandProcessor, WithdrawCommandProcessor withdrawCommandProcessor,
-			InvalidCommandStorage invalidCommandStorage) {
+			TransferCommandProcessor transferCommandProcessor, InvalidCommandStorage invalidCommandStorage) {
 		this.createValidator = createValidator;
 		this.depositValidator = depositValidator;
 		this.passValidator = passValidator;
 		this.withdrawValidator = withdrawValidator;
+		this.transferValidator = transferValidator;
 		this.createCommandProcessor = createCommandProcessor;
 		this.depositCommandProcessor = depositCommandProcessor;
 		this.passCommandProcessor = passCommandProcessor;
 		this.withdrawCommandProcessor = withdrawCommandProcessor;
+		this.transferCommandProcessor = transferCommandProcessor;
 		this.invalidCommandStorage = invalidCommandStorage;
 	}
 
@@ -39,6 +43,8 @@ public class MasterControl {
 				passCommandProcessor.passTime(command);
 			} else if (withdrawValidator.commandIsValid(command)) {
 				withdrawCommandProcessor.withdrawFromAccount(command);
+			} else if (transferValidator.commandIsValid(command)) {
+				transferCommandProcessor.transfer(command);
 			} else {
 				invalidCommandStorage.addCommand(command);
 			}
